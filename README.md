@@ -147,7 +147,3 @@ Il est possible d'explorer une news, si l'on connait son id.
 | `img` | String | URL de l'image de la news |
 | `release` | Date | Date de publication |
 | `content` | String | Contenu de la news, syntaxe MARKDOWN |
-
-[https://lgsnexus.docs.apiary.io/]: https://lgsnexus.docs.apiary.io/
-
-[]: https://lgs-nexus.000webhostapp.com/
