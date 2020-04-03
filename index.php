@@ -3,20 +3,15 @@ include_once "header.php";
 
 //base
 $router->map( 'GET', '/', function() {
-    $msg = ERROR_MESSAGE;
-    http_response_code(405);
-    $msg["status"] = 405;
-    $msg["type"] = "Wrong Usage.";
-    $msg["message"] = "Please chose a game.";
-    echo json_encode($msg);
+    echo json_encode(Helper::loadErrorWith(NOT_ALLOWED,SELECT_GAME));
 });
 
 //news
-$router->map( 'GET', '/[a:game]/?(/[a:category](/)?)?', function($game, $category=null) {
+$router->map( 'GET', '/[s:game]/?(/[s:category](/)?)?', function($game, $category=null) {
     echo json_encode(Parser::parse($game, $category, count($_GET)==0?null:$_GET));
 });
 //one news
-$router->map( 'GET', '/[a:game]/[a:category]/[i:key]', function($game, $category, $key) {
+$router->map( 'GET', '/[s:game]/[s:category]/[i:key]', function($game, $category, $key) {
     echo json_encode(Parser::parse($game, $category, $key));
 });
 
