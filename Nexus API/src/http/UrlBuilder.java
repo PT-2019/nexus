@@ -7,18 +7,25 @@ import java.util.Map;
 
 
 /**
- *  Author : Pierre R.
- *
- *
+ * This class helps to build url more easily from a url base
+ * @Author Pierre R.
+ * @version 1.0
+ * @since 1.0
  */
+
 public class UrlBuilder {
+
+
+    /**
+     * Entrance of the api Nexus
+     */
 
     private final String baseurl = "https://lgs-nexus.000webhostapp.com/";
 
     /**
      * Add your string to the base url, and return it
-     * @param plus
-     * @return [String] Url
+     * @param plus the string to add to the base url
+     * @return The completed url
      */
     public String search(String plus){
         return this.baseurl+plus;
@@ -26,12 +33,13 @@ public class UrlBuilder {
 
 
     /**
-     *  Add parameter to your url
-     * @param target [String] Url
-     * @param param [Map<String,String>] Paramater
-     * @return The url with your parameter
+     *  Complete your url with parameters
+     * @param target url
+     * @param param parameters of your request
+     * @return the url completed with your parameters
      * @throws UnsupportedEncodingException
      */
+
     public String addParameter(String target, Map<String,String> param) throws UnsupportedEncodingException{
         StringBuilder resultUrl = new StringBuilder(target);
         resultUrl.append("?");

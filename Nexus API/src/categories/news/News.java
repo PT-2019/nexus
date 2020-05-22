@@ -3,26 +3,49 @@ package categories.news;
 import categories.Category;
 import org.json.JSONObject;
 
+/**
+ * This class represent an new
+ *
+ * @Author Pierre R.
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class News implements Category{
 
+
+    /**
+     * Title of the new
+     */
     private String title;
+
+    /**
+     * Subtitle of the new
+     */
     private String subTitle;
+
+    /**
+     * Date of the new
+     */
     private String release;
+
+    /**
+     * Id of the new
+     */
     private Integer id;
 
 
+    /**
+     * Path to the image
+     */
+
     private String pathImage;
 
-    public News(String title, String subTitle, String release, Integer id, String pathImage) {
-        this.title = title;
-        this.subTitle = subTitle;
-        this.release = release;
-        this.id = id;
-        this.pathImage = pathImage;
-    }
 
-    public News(){}
-
+    /**
+     * Fill the object with the data contained in the json object
+     * @param info info object Json containing information about the new
+     */
     public void parseResponse(JSONObject info) {
         this.title =  info.getString("title");
         this.subTitle = info.getString("sub_title");
@@ -30,6 +53,11 @@ public class News implements Category{
         this.release = info.getString("released");
         this.pathImage = info.getString("img");
     }
+
+
+    /**
+     * Print your object in the console (Test method)
+     */
 
     public void print() {
         System.out.println("---" + this.pathImage + "---");

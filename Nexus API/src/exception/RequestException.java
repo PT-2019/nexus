@@ -1,5 +1,11 @@
 package exception;
 
+/**
+ * @Author Pierre R.
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class RequestException extends Exception{
 
     public RequestException(){
