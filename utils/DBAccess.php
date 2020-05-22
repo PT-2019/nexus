@@ -20,6 +20,7 @@ class DBAccess {
      */
     public function connect(){
         $this->connexion = mysqli_connect(DB_HOST, DB_USER, DB_PWD, DB_NAME);
+        mysqli_set_charset($this->connexion, "utf8");//set UTF-8
     }
 
     /**

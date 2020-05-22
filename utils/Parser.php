@@ -17,7 +17,7 @@ class Parser {
      * Parse a basic quest
      * @param $game string game (enigma, editor, ...)
      * @param $category string category (news, ..)
-     * @param $request string request (order by, limit, offset, id, ....)
+     * @param $request string|array request (order by, limit, offset, id, ....)
      * @return array json
      */
     static function parse($game,$category, $request) {
@@ -34,10 +34,11 @@ class Parser {
         //si c'est une news
         if($category === CATEGORY_NEWS){
             require  'category/News.php';
-            if(is_array($request) || $request === null)
-                return News::getNews($game, $category, $request);
+            if(is_array($request) || $request === null) {
+                return News::getAllNews($game, $category, $request);
+            }
 
-            return News::getNew($game, $category, $request);
+            return News::getANews($game, $category, $request);
         }
 
         require  'category/GameData.php';

@@ -4,7 +4,7 @@
  * Class News
  *
  * @since 1.0
- * @version 1.0
+ * @version 2.0
  */
 class News {
 
@@ -19,7 +19,7 @@ class News {
      * @since 1.0
      * @version 1.0
      */
-    static function getNew($game, $category, $request){
+    static function getANews($game, $category, $request){
         if(intval($request) === 0 && $request !== "0"){//test id
             return Helper::loadErrorWith(NOT_ALLOWED, INVALID_VALUE." ($request for $game($category))");
         }
@@ -28,7 +28,7 @@ class News {
         $db = new DBAccess();
         $db->connect();
         $result = $db->requestSQLResult($db->request(array(
-            "query"=>"Select * From News Where game='".$game."' AND id=".$request.";",
+            "query"=>"Select * From news Where game='".$game."' AND id=".$request.";",
         )));
         $db->close();
         //traitement du résultat
@@ -39,6 +39,8 @@ class News {
             $retour = $result["result"][0]["content"];
             $retour = file_get_contents($retour);
             if($retour !== false) $result["result"][0]["content"] = $retour;
+        } else {
+            return Helper::loadErrorWith(NOT_FOUND, NO_SUCH_ID);
         }
 
         return $result;
@@ -55,7 +57,7 @@ class News {
      * @since 1.0
      * @version 1.0
      */
-    static function getNews($game, $category, $request){
+    static function getAllNews($game, $category, $request){
         $LIMIT = 10;
         $OFFSET = 0;
         $add_on = "";
@@ -98,7 +100,7 @@ class News {
         }
 
         //envoi de la requête
-        $query = "Select title, sub_title, released, id, img  From News Where game='".$game."' ".$add_on." ORDER BY id DESC LIMIT ".$OFFSET.",".($LIMIT)." ";
+        $query = "Select title, sub_title, released, id, img  From news Where game='".$game."' ".$add_on." ORDER BY id DESC LIMIT ".$OFFSET.",".($LIMIT)." ";
 
         $db = new DBAccess();
         $db->connect();
@@ -115,10 +117,14 @@ class News {
         $result["offset"] = $OFFSET;
         $result["limit"] = $LIMIT;
         $result["total"] = $db->getRowCount($db->request(array(
-            "query"=>"Select Count(*) From News Where game='".$game."' ".$add_on.";",
+            "query"=>"Select Count(*) From news Where game='".$game."' ".$add_on.";",
             "types"=>$params["c"],
             "var"=>$params["v"],
         )));
+
+        foreach ($result['result'] as $k => $v){
+            $result['result'][$k] = $v;
+        }
 
         $db->close();
 

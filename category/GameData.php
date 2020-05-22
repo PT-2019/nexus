@@ -23,7 +23,7 @@ class GameData {
         $db = new DBAccess();
         $db->connect();
         $result = $db->requestSQLResult($db->request(array(
-            "query"=>"Select name, id, version From Game Where name='".$game."'",
+            "query"=>"Select name, id, version From game Where name='".$game."'",
         )));
         $db->close();
 
