@@ -1,2 +1,7 @@
-utils/data/db_data.php
-category/news/*
+### Java ###
+*.class
+*.war
+*.nar
+*.ear
+*.rar
+hs_err_pid*
