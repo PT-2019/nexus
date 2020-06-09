@@ -1,18 +1,9 @@
 package nexus.markdown;
 
 import nexus.exception.MarkdownException;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  * Parse a Nexus markdown file to it's model representation.
@@ -23,15 +14,23 @@ import java.util.HashMap;
  */
 public class MarkdownParser {
 
-    public void parse(String base){
+    //no instances
+    private MarkdownParser() {}
+
+    /**
+     * Parse an return markdown content as a file
+     * @param base content as a string
+     * @return content as a MarkdownFile
+     */
+    public static MarkdownFile parse(String base){
         MarkdownFile file = new MarkdownFile();
         String[] content = base.split("\n");
 
         for (int i = 0; i < content.length; i++) {
             String s = content[i];
             if(s.trim().startsWith("#")){//title
-                this.extractTitle(file, i, s);
-            } else if (s.trim().equals("---")){
+                extractTitle(file, i, s);
+            } else if (s.trim().equals("---")){//line separator
                 file.add(MarkdownElement.HR, "---");
             } else if (s.startsWith("* ")){
                 file.add(MarkdownElement.UL, s.replace("* ","").trim());
@@ -43,20 +42,19 @@ public class MarkdownParser {
                     if(i != r) i = r - 1;;
                 }
             } else if(s.startsWith("|")){
-                this.extractTable(file, s, i, content);
+                extractTable(file, s, i, content);
             } else if(!isBreakLine(s, i, content)) {//this is a paragraph, but it may contains * or _ or ~ or |
                 int r = parseMultiLinesP(file, s, i, content);
                 if(i != r) i = r - 1;
             }
         }
-
-        System.out.println(file);
+        return file;
     }
 
     // ------------------------------ PARSE ----------------------------- \\
 
     /** Pack again a couple of lines into one. */
-    private int parseMultiLinesP(MarkdownFile file, String line, int i, String[] content) {
+    private static int parseMultiLinesP(MarkdownFile file, String line, int i, String[] content) {
         StringBuilder buf = new StringBuilder();
         ArrayList<Object> e = new ArrayList<>();
         i++;
@@ -87,7 +85,7 @@ public class MarkdownParser {
     }
 
     /** Pack again a couple of lines into one. */
-    private int parseMultiLinesList(MarkdownFile file, String line, int i, String[] content) {
+    private static int parseMultiLinesList(MarkdownFile file, String line, int i, String[] content) {
         StringBuilder buf = new StringBuilder(line);
         ArrayList<Object> tables = new ArrayList<>();
         i++;
@@ -116,7 +114,7 @@ public class MarkdownParser {
     // ------------------------------ CONVENIENCE ----------------------------- \\
 
     /** Returns if a line is a breaking/empty line meaning an end tag of a p, ul, etc.... */
-    private boolean isBreakLine(String line, int i, String[] lines) {
+    private static boolean isBreakLine(String line, int i, String[] lines) {
         //another tag
         if(line.trim().equals("---") || line.trim().startsWith("#"))
             return false;
@@ -135,7 +133,7 @@ public class MarkdownParser {
 
     // ------------------------------ EXTRACT ----------------------------- \\
 
-    private void extractBold(String line, StringBuilder buf, ArrayList<Object> content){
+    private static void extractBold(String line, StringBuilder buf, ArrayList<Object> content){
         int bIndex1 = line.indexOf("**")+2;
         int bIndex2 = line.lastIndexOf("**");
         String subP = line.substring(bIndex1, bIndex2);
@@ -146,11 +144,11 @@ public class MarkdownParser {
         content.add(parts[1]);
     }
 
-    private int extractTable(MarkdownFile file, String line, int i, String[] content){
+    private static int extractTable(MarkdownFile file, String line, int i, String[] content){
        return extractTable(file, line, i, content, null);
     }
 
-    private int extractTable(MarkdownFile file, String line, int i, String[] content,
+    private static int extractTable(MarkdownFile file, String line, int i, String[] content,
                              ArrayList<Object> o) {
 
         ArrayList<String> cols = new ArrayList<>();
@@ -197,7 +195,7 @@ public class MarkdownParser {
      * ##### title
      * ###### title
      */
-    private void extractTitle(MarkdownFile file, int line, String titleRaw){
+    private static void extractTitle(MarkdownFile file, int line, String titleRaw){
         int i;
         MarkdownElement h;
         String title;
@@ -221,29 +219,6 @@ public class MarkdownParser {
             throw new MarkdownException(line, "Empty Title.");
 
         file.add(h, title);
-    }
-
-    // ------------------------------ TEST ----------------------------- \\
-
-    public static void main(String[] args) {
-        //Read file from stream
-        StringBuilder sb = new StringBuilder();
-        try {
-            InputStream stream = MarkdownParser.class.getResourceAsStream("/test.json");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
-            String line;
-            while((line = reader.readLine()) != null){
-                sb.append(line);
-            }
-            reader.close();
-        } catch (Exception ignore){}
-
-        //process test
-        JSONObject file = new JSONObject(sb.toString());
-        JSONArray rows = file.getJSONArray("result");
-        JSONObject row = (JSONObject) rows.get(0);
-        //parse content
-        new MarkdownParser().parse(row.getString("content"));
     }
 
 }

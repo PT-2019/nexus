@@ -8,6 +8,18 @@ package nexus.markdown;
  * @author Quentin Ra
  */
 public enum MarkdownElement {
+    // Titles
     H1, H2, H3, H4, H5, H6,
-    B, P, HR, UL, LI, TABLE,
+    // Styles
+    B, I, S,
+    //paragraphe
+    P,
+    //separator
+    HR,
+    //un-ordered list
+    UL,
+    //list element
+    LI,
+    //table
+    TABLE,
 }

@@ -53,11 +53,11 @@ public class NexusAPI {
      * @throws IllegalArgumentException if the game doesnt exist
      */
     public ArrayList<News> getAllNews(String game) {
-        /*if(game.isEmpty()) throw new IllegalArgumentException("This game is empty");
+        if(game.isEmpty()) throw new IllegalArgumentException("This game is empty");
 
         this.request.prepareGetRequest(this.build.search(game+"/news"));
-        return NexusRequestParser.getListCategory(this.request.readResponse(), News.class);*/
-        return new ArrayList<>();
+        return NexusRequestParser.getListCategory(this.request.readResponse(), News.class);
+        //return new ArrayList<>();
     }
 
     /**
@@ -69,10 +69,23 @@ public class NexusAPI {
      * @throws IllegalArgumentException if name is empty
      */
     public News getNewsByID(Game game, Integer id) throws IllegalArgumentException {
-        if(game.getName().isEmpty()) throw new IllegalArgumentException("This game is empty");
-        HashMap<String, String> parameter = new HashMap<>();
-        parameter.put("id", id.toString());
-        this.request.prepareGetRequest(this.build.addParameter(this.build.search(game.getName()+"/news"), parameter));
+        return getNewsByID(game.getName(), id);
+    }
+
+    /**
+     * Get the new associated with the id
+     *
+     * @param game the game
+     * @param id id of the new
+     * @return return the new associated with the id
+     * @throws IllegalArgumentException if name is empty
+     */
+    public News getNewsByID(String game, Integer id) throws IllegalArgumentException {
+        if(game.isEmpty()) throw new IllegalArgumentException("This game is empty");
+        //HashMap<String, String> parameter = new HashMap<>();
+        //parameter.put("id", id.toString());
+        //this.request.prepareGetRequest(this.build.addParameter(this.build.search(game+"/news"), parameter));
+        this.request.prepareGetRequest(this.build.search(game+"/news/"+id));
         String response = this.request.readResponse();
         return NexusRequestParser.getInformationCategory(response, new News());
     }

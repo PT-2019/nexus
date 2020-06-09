@@ -1,4 +1,6 @@
 ### Java ###
+build/*
+
 *.class
 *.war
 *.nar

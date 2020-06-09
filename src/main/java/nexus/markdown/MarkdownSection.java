@@ -29,11 +29,13 @@ public class MarkdownSection {
     }
 
     public MarkdownElement getTag() { return tag; }
+
     public ArrayList<Object> getContent() { return new ArrayList<>(content); }
+    public Object getContent(int index) { return new ArrayList<>(content).get(index); }
 
     @Override
     public String toString() {
-        return "{"+getTag()+":"+getContent().get(0)+"}";
+        return toString(0);
     }
 
     public String toString(int tSpace) {

@@ -23,6 +23,8 @@ public class News implements Category{
     private Integer id;
     /** Path to the image */
     private String pathImage;
+    /** Content */
+    private String content;
 
     // ------------------------------ CONSTRUCTORS ----------------------------- \\
 
@@ -35,6 +37,7 @@ public class News implements Category{
         this.release = release;
         this.id = id;
         this.pathImage = pathImage;
+        this.content = "";
     }
 
     // ------------------------------ GETTERS ----------------------------- \\
@@ -44,6 +47,7 @@ public class News implements Category{
     public String getRelease() { return release; }
     public Integer getId() { return id; }
     public String getPathImage() { return pathImage; }
+    public String getContent() { return content; }
 
     // ------------------------------ UTILS ----------------------------- \\
 
@@ -58,6 +62,8 @@ public class News implements Category{
         this.id = info.getInt("id");
         this.release = info.getString("released");
         this.pathImage = info.getString("img");
+        if(info.has("content")) this.content = info.getString("content");
+        else this.content = "";
     }
 
     /** @deprecated use {@link #toString()} instead. */
@@ -73,7 +79,13 @@ public class News implements Category{
 
     @Override
     public String toString() {
-        return "News{" + "title='" + title + '\'' + ", subTitle='" + subTitle + '\'' + ", release='" + release + '\'' +
-                ", id=" + id + ", pathImage='" + pathImage + '\'' + '}';
+        return "News{" +
+                "title='" + title + '\'' +
+                ", subTitle='" + subTitle + '\'' +
+                ", release='" + release + '\'' +
+                ", id=" + id +
+                ", pathImage='" + pathImage + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }
