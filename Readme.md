@@ -1,12 +1,15 @@
+# Nexus
 
-# /news/1
+Nexus is Legendary Games Studio official ([lgs-games.com](https://lgs-games.com/)) API.
 
-{"id_news":1,"id_game":72,"date":"2020-09-11","img_url":null,"content_url":null,"title_fr":"Sortie de Tyrn v1.0","title_en":"Tyrn v1.0 Released"}
+This api was made to allow easy access to our games, and the news of our games.
+We can and maybe will allow you to access users public data 
+(username, description, reputation, friends, ...) in an upcomming release.
 
-# /news?game=72
+No Key or Login are required, all request are made using `GET`.
 
-{"result":[{"id_news":1,"id_game":72,"date":"2020-09-11","img_url":null,"content_url":null,"title_fr":"Sortie de Tyrn v1.0","title_en":"Tyrn v1.0 Released"}],"offset":0,"limit":10,"total":1}
+**API BASE ENDPOINT** : `https://lgs-games.com/api/`
 
-# /news?game=72&offset=-1
+**API VERSION** : `version 2.0 - 09 September 2020`
 
-{"status":405,"type":"Method Not Allowed","message":"Invalid value. (-1 for offset)","help":"For usage, please see: https:\/\/lgsnexus.docs.apiary.io\/"}
+Documentation can found here : [lgsnexus.docs.apiary.io](https://lgsnexus.docs.apiary.io/)
