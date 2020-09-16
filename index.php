@@ -1,18 +1,23 @@
 <?php
 include_once "header.php";
 
+//init router
+$router = new AltoRouter();
+$router->setBasePath(BASE_PATH);
+
 //base
 $router->map( 'GET', '/', function() {
-    echo json_encode(Helper::loadErrorWith(NOT_ALLOWED,SELECT_GAME));
+    //error ask to select a section :
+    //GAMES, NEWS
+    echo json_encode(Helper::loadErrorWith(NOT_ALLOWED,SELECT_SECTION));
 });
 
-//news
-$router->map( 'GET', '/[s:game]/?(/[s:category](/)?)?', function($game, $category=null) {
-    echo json_encode(Parser::parse($game, $category, count($_GET)==0?null:$_GET));
-});
-//one news
-$router->map( 'GET', '/[s:game]/[s:category]/[i:key]', function($game, $category, $key) {
-    echo json_encode(Parser::parse($game, $category, $key));
+//maps everything to the parser
+$router->map( 'GET', '/[s:category]/[i:id]?/?', function($category, $id=null) {
+    if(!in_array($category, CATEGORIES)){
+        echo json_encode(Helper::loadErrorWith(NOT_ALLOWED,NO_SUCH_CATEGORY));
+    }
+    echo json_encode(Parser::parse($category, $id, count($_GET)==0?null:$_GET));
 });
 
 //mapping

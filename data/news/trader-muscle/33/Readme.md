@@ -1,1 +1,0 @@
-# Sortie de Trader Musclé
