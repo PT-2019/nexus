@@ -4,6 +4,9 @@ import nexus.exception.MarkdownException;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Parse a Nexus markdown file to it's model representation.
@@ -71,6 +74,30 @@ public class MarkdownParser {
             if(line.contains("**")){
                 extractBold(line, buf, e);
                 buf = new StringBuilder();
+                continue;
+            }
+            if(line.matches("(.*)(\\[.+]\\(.+\\))(.*)")){
+                Matcher m = Pattern.compile("(.*)(\\[.+]\\(.+\\))([^\\[]*)").matcher(line);
+                while (m.find()) {
+                    String p1 = m.group(1);
+                    String p2 = m.group(3);
+                    String l = m.group(2);
+                    e.add(buf.toString()+" "+p1);
+
+                    boolean in = false;
+                    StringBuilder link = new StringBuilder();
+                    for (int j = 0; j < l.length(); j++) {
+                        if(l.charAt(j) != '[' && !in) continue;
+                        in = true;
+                        if(l.charAt(j) == '[') continue;
+                        if(l.charAt(j) == ']') break;
+                        link.append(l.charAt(j));
+                    }
+
+                    e.add(new MarkdownSection(MarkdownElement.A, link.toString()));
+                    e.add(p2);
+                    buf = new StringBuilder();
+                }
                 continue;
             }
             buf.append(" ");

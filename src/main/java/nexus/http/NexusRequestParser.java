@@ -1,6 +1,8 @@
 package nexus.http;
 
 import nexus.categories.Category;
+import nexus.categories.games.Game;
+import nexus.categories.news.News;
 import nexus.exception.NexusParserException;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +11,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class which parse the response of the api into an java object
@@ -78,6 +82,45 @@ public class NexusRequestParser {
     public static void errorHandler(Exception e){
         System.err.println(e + " / Please contact the dev team ! /");
         e.printStackTrace();
+    }
+
+    public static Map<Integer, Game> getAllGames(String response) {
+        try {
+            if (response.length() > 0) {
+                JSONObject parse = new JSONObject(response);
+                JSONArray array = parse.getJSONArray("result");
+
+                HashMap<Integer, Game> games = new HashMap<>();
+
+                for (Object e:array) {
+                    JSONObject o = ((JSONObject)e);
+                    Game game = new Game();
+                    game.parseResponse(o);
+                    games.put(
+                            o.getInt("id_game"),
+                            game
+                    );
+                }
+                return games;
+            }
+        }catch(JSONException jse){
+            throw new NexusParserException(jse);
+        }
+        throw new NexusParserException("Nothing to parse !");
+    }
+
+    public static News getNewsByID(String response) {
+        try {
+            if (response.length() > 0) {
+                JSONObject parse = new JSONObject(response);
+                News cat = new News();
+                cat.parseResponse(parse);
+                return cat;
+            }
+        }catch(JSONException jse){
+            throw new NexusParserException(jse);
+        }
+        throw new NexusParserException("Nothing to parse !");
     }
 }
 

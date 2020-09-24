@@ -22,4 +22,6 @@ public enum MarkdownElement {
     LI,
     //table
     TABLE,
+    //link
+    A
 }

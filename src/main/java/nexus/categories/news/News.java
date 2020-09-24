@@ -14,40 +14,43 @@ import org.json.JSONObject;
 public class News implements Category{
 
     /** Title of the new */
-    private String title;
-    /** Subtitle of the new */
-    private String subTitle;
+    private String titleFr, titleEn;
     /** Date of the new */
     private String release;
     /** Id of the new */
-    private Integer id;
+    private Integer id, id_game;
     /** Path to the image */
     private String pathImage;
     /** Content */
-    private String content;
+    private String contentFr, contentEn;
 
     // ------------------------------ CONSTRUCTORS ----------------------------- \\
 
-    public News(){ this("", "","",-1,""); }
-    public News(String title){ this(title, "","",-1,""); }
+    public News(){ this(""); }
+    public News(String title){ this(title, title,"",-1,-1,"","",""); }
 
-    public News(String title, String subTitle, String release, Integer id, String pathImage) {
-        this.title = title;
-        this.subTitle = subTitle;
+    public News(String title_fr, String title_en, String release, Integer id, Integer id_game,
+                String pathImage, String content_fr, String content_en) {
+        this.titleFr = title_fr;
+        this.titleEn = title_en;
         this.release = release;
         this.id = id;
+        this.id_game = id_game;
         this.pathImage = pathImage;
-        this.content = "";
+        this.contentFr = content_fr;
+        this.contentEn = content_en;
     }
 
     // ------------------------------ GETTERS ----------------------------- \\
 
-    public String getTitle() { return title; }
-    public String getSubTitle() { return subTitle; }
+    public String getTitleFr() { return titleFr; }
+    public String getTitleEn() { return titleEn; }
     public String getRelease() { return release; }
     public Integer getId() { return id; }
+    public Integer getId_game() { return id_game; }
     public String getPathImage() { return pathImage; }
-    public String getContent() { return content; }
+    public String getContentFr() { return contentFr; }
+    public String getContentEn() { return contentEn; }
 
     // ------------------------------ UTILS ----------------------------- \\
 
@@ -57,35 +60,30 @@ public class News implements Category{
      */
     @Override
     public void parseResponse(JSONObject info) {
-        this.title =  info.getString("title");
-        this.subTitle = info.getString("sub_title");
-        this.id = info.getInt("id");
-        this.release = info.getString("released");
-        this.pathImage = info.getString("img");
-        if(info.has("content")) this.content = info.getString("content");
-        else this.content = "";
-    }
-
-    /** @deprecated use {@link #toString()} instead. */
-    @Deprecated
-    public void print() {
-        System.out.println("---" + this.pathImage + "---");
-        System.out.println("---" + this.title+ "---");
-        System.out.println("---" + this.subTitle + "---");
-        System.out.println("---" + this.release + "---");
-        System.out.println("---" + this.id + "---");
-        System.out.println();
+        this.titleEn =  info.getString("title_en");
+        this.titleFr =  info.getString("title_fr");
+        this.id = info.getInt("id_news");
+        this.id_game = info.getInt("id_game");
+        this.release = info.getString("date");
+        this.pathImage = info.getString("img_url");
+        if(info.has("content_url_fr")) this.contentFr = info.getString("content_url_fr");
+        if(info.has("content_url_en")) this.contentEn = info.getString("content_url_en");
     }
 
     @Override
     public String toString() {
         return "News{" +
-                "title='" + title + '\'' +
-                ", subTitle='" + subTitle + '\'' +
+                "titleFr='" + titleFr + '\'' +
+                ", titleEn='" + titleEn + '\'' +
                 ", release='" + release + '\'' +
                 ", id=" + id +
+                ", id_game=" + id_game +
                 ", pathImage='" + pathImage + '\'' +
-                ", content='" + content + '\'' +
+                ", contentFr='" + contentFr + '\'' +
+                ", contentEn='" + contentEn + '\'' +
                 '}';
     }
+
+    public String getTitle(String language) { return language.equals("fr") ? titleFr:titleEn; }
+    public String getContent(String language) { return language.equals("fr") ? contentFr:contentEn; }
 }

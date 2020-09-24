@@ -13,8 +13,7 @@ import java.util.Map;
 public class UrlBuilder {
 
     /** Entrance of the api Nexus */
-    //private static final String BASE_URL = "https://lgs-nexus.000webhostapp.com/";
-    private static final String BASE_URL = "http://localhost/nexus/";
+    private static final String BASE_URL = "https://lgs-games.com/api/";
 
     public UrlBuilder() {}
 

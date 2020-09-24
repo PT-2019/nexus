@@ -21,14 +21,15 @@ public class Test {
         System.out.println();
 
        System.out.println("Request to get a new by id : ");
-       News n = rap.getNewsByID(g, 31);
-       n.print();
-       System.out.println();
+       News n = rap.getNewsByID(31);
+       //n.print();
+       System.out.println(n);
 
        System.out.println("Request to get all news of a game : ");
         ArrayList<News> arr = rap.getAllNews(g);
         for(News a : arr){
-            a.print();
+            //a.print();
+            System.out.println(a);
         }
     }
 
