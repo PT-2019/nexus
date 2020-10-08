@@ -82,10 +82,18 @@ public class NexusAPI {
      * @param name name of the game
      * @return return the game associated with the name
      */
+    @Deprecated
     public Game getGameByName(String name){
         this.request.prepareGetRequest(this.build.search(name));
         String response = this.request.readResponse();
         return NexusRequestParser.getInformationCategory(response, new Game());
+    }
+
+    public Game getGameByID(int gameID){
+        if(gameID <= 0) throw new IllegalArgumentException("This game is empty");
+        this.request.prepareGetRequest(this.build.search("games/"+gameID));
+        String response = this.request.readResponse();
+        return NexusRequestParser.getGame(response);
     }
 
     public Map<Integer, Game> getAllGames() {

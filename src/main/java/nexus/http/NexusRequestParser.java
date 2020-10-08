@@ -122,6 +122,20 @@ public class NexusRequestParser {
         }
         throw new NexusParserException("Nothing to parse !");
     }
+
+    public static Game getGame(String response) {
+        try {
+            if (response.length() > 0) {
+                JSONObject parse = new JSONObject(response);
+                Game cat = new Game();
+                cat.parseResponse(parse);
+                return cat;
+            }
+        }catch(JSONException jse){
+            throw new NexusParserException(jse);
+        }
+        throw new NexusParserException("Nothing to parse !");
+    }
 }
 
 
