@@ -21,12 +21,9 @@ La bibliothèque ne vous donne pas de ressource
 
 ### Fonctionnalités de la V1
 
-- Vous pouvez créer des catégorie, et leur donner 
-des attributs (=propriétés). Le types des attributs
-sont fixés (texte, entier, réel, atlas, chemin, ...).
-- Vous pouvez empacter des ressources dans la librairie
-via le menu associé.
-- Le logiciel est disponible en français et en anglais.
+* Vous pouvez créer des catégorie, et leur donner des attributs (=propriétés). Le types des attributs sont fixés (texte, entier, réel, atlas, chemin, ...).
+* Vous pouvez empacter des ressources dans la librairie via le menu associé.
+* Le logiciel est disponible en français et en anglais.
 
 
 ### En phase de tests
@@ -38,7 +35,7 @@ semaines.
 
 ### Documentation
 
-La documentation sera disponible vers le 20 septembre
+La documentation sera disponible vers le 20 octobre
 [https://github.com/lgs-games/tyrn/wiki](https://github.com/lgs-games/tyrn/wiki).
 
 ### Crédits

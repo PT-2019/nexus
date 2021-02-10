@@ -1,8 +1,7 @@
-php_value display_errors 1
 Redirect 301 /docs https://lgsnexus.docs.apiary.io/
 
 RewriteEngine On
 RewriteBase "/"
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)$ nexus/index.php [L]
+RewriteRule ^(.+)$ api/index.php [L]

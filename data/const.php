@@ -1,5 +1,5 @@
 <?php
-define("BASE_PATH", '/nexus');
+define("BASE_PATH", '/api');
 define("REQUEST_LIMIT", 10);
 
 include_once 'errors.php';

@@ -19,12 +19,9 @@ You can find some royalties free assets at itch.io, we recommends
 
 ### Fonctionnalités de la V1
 
-- You can create categories, and add attributes (properties
-such as a name for a person). The list of types (text, number, ...)
-for an attribute is limited.
-- You can pack files (images, musics, atlas, etc...)
-- The software is available in english and in french
-
+* You can create categories, and add attributes (properties such as a name for a person). The list of types (text, number, ...) for an attribute is limited.
+* You can pack files (images, musics, atlas, etc...)
+* The software is available in english and in french
 
 ### En phase de tests
 
@@ -37,7 +34,7 @@ We will make a patch in the next weeks.
 
 ### Documentation
 
-Documentation will be available around the 20th of September at
+Documentation will be available around the 20th of October at
 [https://github.com/lgs-games/tyrn/wiki](https://github.com/lgs-games/tyrn/wiki).
 
 ### Crédits
